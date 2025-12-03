@@ -1,67 +1,26 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const screen = document.querySelector('.screen');
-  const buttons = document.querySelectorAll('.buttons button');
+// Declaration of variable.
+let name = 'Rodhel';
+console.log(name);
 
-  let currentInput = '';
+let money = 5;
+console.log(money);
 
-  function updateScreen() {
-    screen.textContent = currentInput || '0';
-  }
+let dogName = 'Fudgey'; // Sring Literal
+let age = '19'; // Number Literal
+let isApproved = true; // Boolean Literal
+let selectColor = null; // use to clear the value  on the variables
 
-  function isOperator(char) {
-    return ['+', '-', '*', '/'].includes(char);
-  }
 
-  function safeEvaluate(input) {
-    while (input && isOperator(input.slice(-1))) input = input.slice(0, -1);
-    if (!input) return '0';
-    try {
-      return Function('"use strict";return (' + input + ')')().toString();
-    } catch {
-      return 'Error';
-    }
-  }
+// ------Object-----
+let person = {
+    name: 'Rodhel',
+    age: 30
+};
 
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      const value = button.textContent;
+console.log(person);
 
-      if (value === '=') {
-        currentInput = safeEvaluate(currentInput);
-      } else if (value === 'C') {
-        currentInput = '';
-      } else if (value === '⌫') {
-        currentInput = currentInput.slice(0, -1);
-      } else {
-        if (isOperator(value) && (!currentInput || isOperator(currentInput.slice(-1)))) return;
-        if (value === '.') {
-          const lastNumber = currentInput.split(/[\+\-\*\/]/).pop();
-          if (lastNumber.includes('.')) return;
-        }
-        currentInput += value;
-      }
+// ways to manipulte
+person.name = 'Rex';
+person ['name'] = 'Ruby';
 
-      updateScreen();
-    });
-  });
-
-  document.addEventListener('keydown', (e) => {
-    const key = e.key;
-
-    if (!isNaN(key) || ['+', '-', '*', '/'].includes(key)) {
-      if (isOperator(key) && (!currentInput || isOperator(currentInput.slice(-1)))) return;
-      currentInput += key;
-    } else if (key === '.') {
-      const lastNumber = currentInput.split(/[\+\-\*\/]/).pop();
-      if (!lastNumber.includes('.')) currentInput += '.';
-    } else if (key === 'Enter') {
-      currentInput = safeEvaluate(currentInput);
-    } else if (key === 'Backspace') {
-      currentInput = currentInput.slice(0, -1);
-    } else if (key.toLowerCase() === 'c') {
-      currentInput = '';
-    }
-
-    updateScreen();
-  });
-});
+console.log(person.name);
